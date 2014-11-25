@@ -1,6 +1,7 @@
 import persistent_messages
 from persistent_messages.constants import PERSISTENT_MESSAGE_LEVELS
 from django.db import models
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_unicode
 from django.contrib import messages
@@ -11,8 +12,8 @@ from django.utils.encoding import force_unicode
 LEVEL_TAGS = utils.get_level_tags()
 
 class Message(models.Model):
-    user = models.ForeignKey(get_user_model(), blank=True, null=True)
-    from_user = models.ForeignKey(get_user_model(), blank=True, null=True, related_name="from_user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="from_user")
     subject = models.CharField(max_length=255, blank=True, default='')
     message = models.TextField()
     LEVEL_CHOICES = (
